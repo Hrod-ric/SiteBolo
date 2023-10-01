@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Bolo</title>
+    <style>
+        body{
+          background-color: pink;
+        }
+        .navbar-custom {
+            background-color: #FF8E9E;
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-text {
+            color: rgba(255,255,255,.8);
+        }
+        .navbar-custom .navbar-nav .nav-link {
+            color: rgb(0, 0, 0);
+        }
+        .navbar-custom .nav-item.active .nav-link,
+        .navbar-custom .nav-item:hover .nav-link {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-custom fixed-top">
+        <!-- Brand -->
+        <a class="navbar-brand" href="http://localhost:3000/home"><img src="../imagens/logojanice.png" width="30px"></a>
+      
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:3000/Cliente">Clientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:3000/Funcionario">Funcionarios</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="http://localhost:3000/Bolo">Bolos</a>
+            </li>
+            <!--<li class="nav-item">
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#myModal">ADM</a>
+            </li>-->
+          </ul>
+        </div>
+    </nav>
+
+
+    <div style="padding-left: 20%; padding-right: 20%;  padding-top: 5%; padding-bottom: 2%; color: black; background-color: white">
+        <h1>Lista de Pedidos</h1>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalCadastrar">Novo Bolo</button>
+
+        <div style="padding-top: 10px;">
+            <table class="table table-striped" style="text-align: center;">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Sabor</th>
+                        <th>Tamanho</th>
+                        <th>Valor</th>
+                        <th>Editar</th>
+                        <th>Deletar</th>
+                    </tr>
+                </thead>
+                <%
+                    for(var i = 0; i < bolo.length ; i++){
+                %>
+                        <tr>
+                            <td><%=bolo[i].ID%></td>
+                            <td><%=bolo[i].NOME%></td>
+                            <td><%=bolo[i].SABOR%></td>
+                            <td><%=bolo[i].TAMANHO%></td>
+                            <td>R$ <%=bolo[i].VALOR%></td>
+                            <td>
+                                <button type="button" class="btn btn-secondary" 
+                                    data-toggle="modal" data-target="#myModalEditar"
+                                    data-id="<%=bolo[i].ID%>"
+                                    data-nome="<%=bolo[i].NOME%>"
+                                    data-sabor="<%=bolo[i].SABOR%>"
+                                    data-tamanho="<%=bolo[i].TAMANHO%>"
+                                    data-valor="<%=bolo[i].VALOR%>">
+                                    Editar
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" 
+                                    data-toggle="modal" data-target="#myModalDeletar"
+                                    data-id="<%=bolo[i].ID%>"
+                                    data-nome="<%=bolo[i].NOME%>">
+                                    Deletar
+                                </button>
+                            </td>
+                        </tr>
+                <%
+                    }
+                %>
+            </table>
+        </div>
+    </div>
+
+    <!---->
+
+    <div style="padding-left: 20%; padding-right: 20%;  padding-top: 5%; padding-bottom: 2%; color: black; background-color: white">
+        <h1>Catalogo</h1>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalCadastrarC">Novo Bolo</button>
+
+        <div style="padding-top: 10px;">
+            <table class="table table-striped" style="text-align: center;">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th>Tamanho</th>
+                        <th>Valor</th>
+                        <th>Editar</th>
+                        <th>Deletar</th>
+                    </tr>
+                </thead>
+                <%
+                    for(var i = 0; i < catalogo.length ; i++){
+                %>
+                        <tr>
+                            <td><%=catalogo[i].ID%></td>
+                            <td><%=catalogo[i].NOME%></td>
+                            <td><%=catalogo[i].TAMANHO%></td>
+                            <td>R$ <%=catalogo[i].VALOR%></td>
+                            <td>
+                                <button type="button" class="btn btn-secondary" 
+                                    data-toggle="modal" data-target="#myModalEditarC"
+                                    data-id="<%=catalogo[i].ID%>"
+                                    data-nome="<%=catalogo[i].NOME%>"
+                                    data-tamanho="<%=catalogo[i].TAMANHO%>"
+                                    data-valor="<%=catalogo[i].VALOR%>">
+                                    Editar
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" 
+                                    data-toggle="modal" data-target="#myModalDeletarC"
+                                    data-id="<%=catalogo[i].ID%>"
+                                    data-nome="<%=catalogo[i].NOME%>">
+                                    Deletar
+                                </button>
+                            </td>
+                        </tr>
+                <%
+                    }
+                %>
+            </table>
+        </div>
+    </div>
+  
+    <!-- The Modal -->
+    <div class="modal" id="myModalCadastrar">
+        <div class="modal-dialog">
+            <div class="modal-content">
+    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Novo Bolo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/bolo/cadastrar" method="post">
+                        <div class="form-group">
+                          <label for="nome">Nome:</label>
+                          <input type="text" class="form-control" placeholder="Informe o nome" id="nome" name="nome">
+                        </div>
+                        <div class="form-group">
+                            <label for="sabor">Sabor:</label>
+                            <input type="text" class="form-control" placeholder="Informe o sabor" id="recipient-sabor" name="sabor">
+                        </div>
+                        <div class="form-group">
+                            <label for="tamanho">Tamanho:</label>
+                            <input type="int" class="form-control" placeholder="Informe o tamanho" id="recipient-tamanho" name="tamanho">
+                        </div>
+                        <div class="form-group">
+                            <label for="valor">Valor:</label>
+                            <input type="text" class="form-control" placeholder="Informe o valor" id="recipient-valor" name="valor">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Criar</button>
+                      </form>
+                </div>
+        
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModalEditar">
+        <div class="modal-dialog">
+            <div class="modal-content">
+    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar Bolo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/bolo/editar" method="post">
+                        <input type="hidden" name="id" id="recipient-id">
+                        <div class="form-group">
+                            <label for="nome">Nome:</label>
+                            <input type="text" class="form-control" placeholder="Informe o nome" id="recipient-nome" name="nome">
+                        </div>
+                        <div class="form-group">
+                            <label for="sabor">Sabor:</label>
+                            <input type="text" class="form-control" placeholder="Informe o sabor" id="recipient-sabor" name="sabor">
+                        </div>
+                        <div class="form-group">
+                            <label for="tamanho">Tamanho:</label>
+                            <input type="int" class="form-control" placeholder="Informe o tamanho" id="recipient-tamanho" name="tamanho">
+                        </div>
+                        <div class="form-group">
+                            <label for="valor">Valor:</label>
+                            <input type="text" class="form-control" placeholder="Informe o valor" id="recipient-valor" name="valor">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Editar</button>
+                        </form>
+                </div>
+        
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModalDeletar">
+        <div class="modal-dialog">
+            <div class="modal-content">
+    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Deletar Bolo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/bolo/deletar" method="post">
+                        <input type="hidden" name="id" id="recipient-id">
+                        <div class="form-group">
+                            <label for="nome">Nome:</label>
+                            <input type="text" class="form-control" id="recipient-nome" name="nome" readonly>
+                        </div>
+                        
+                        
+                        <button type="submit" class="btn btn-primary">Excluir</button>
+                        </form>
+                </div>
+        
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+
+    <!---->
+
+
+    <!-- The Modal -->
+    <div class="modal" id="myModalCadastrarC">
+        <div class="modal-dialog">
+            <div class="modal-content">
+    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Novo Bolo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/catalogo/cadastrar" method="post">
+                        <div class="form-group">
+                          <label for="nome">Nome:</label>
+                          <input type="text" class="form-control" placeholder="Informe o nome" id="nome" name="nome">
+                        </div>
+                        <div class="form-group">
+                            <label for="tamanho">Tamanho:</label>
+                            <input type="text" class="form-control" placeholder="Informe o tamanho" id="recipient-tamanho" name="tamanho">
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Tipo:</label>
+                            <input type="int" class="form-control" placeholder="1 - Decorada, 2- Vulcao, 3 - Trufado, 4 - Caseiro, 5 - Outros" id="recipient-tipo" name="tipo">
+                        </div>
+                        <div class="form-group">
+                            <label for="valor">Valor:</label>
+                            <input type="text" class="form-control" placeholder="Informe o valor" id="recipient-valor" name="valor">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Criar</button>
+                      </form>
+                </div>
+        
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModalEditarC">
+        <div class="modal-dialog">
+            <div class="modal-content">
+    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Editar Bolo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/catalogo/editar" method="post">
+                        <input type="hidden" name="id" id="recipient-id">
+                        <div class="form-group">
+                            <label for="nome">Nome:</label>
+                            <input type="text" class="form-control" placeholder="Informe o nome" id="recipient-nome" name="nome">
+                        </div>
+                        <div class="form-group">
+                            <label for="tamanho">Tamanho:</label>
+                            <input type="text" class="form-control" placeholder="Informe o tamanho" id="recipient-tamanho" name="tamanho">
+                        </div>
+                        <div class="form-group">
+                            <label for="valor">Valor:</label>
+                            <input type="text" class="form-control" placeholder="Informe o valor" id="recipient-valor" name="valor">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Editar</button>
+                        </form>
+                </div>
+        
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="myModalDeletarC">
+        <div class="modal-dialog">
+            <div class="modal-content">
+    
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Deletar Bolo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form action="/catalogo/deletar" method="post">
+                        <input type="hidden" name="id" id="recipient-id">
+                        <div class="form-group">
+                            <label for="nome">Nome:</label>
+                            <input type="text" class="form-control" id="recipient-nome" name="nome" readonly>
+                        </div>
+                        
+                        
+                        <button type="submit" class="btn btn-primary">Excluir</button>
+                        </form>
+                </div>
+        
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#myModalEditar').on('show.bs.modal', function(event){
+            var button = $(event.relatedTarget);
+            var recipientid = button.data('id');
+            var recipientnome = button.data('nome');
+            var recipienttamanho = button.data('tamanho');
+            var recipientsabor = button.data('sabor');
+            var recipientvalor = button.data('valor');
+
+            var modal = $(this);
+            modal.find('#recipient-id').val(recipientid);
+            modal.find('#recipient-nome').val(recipientnome);
+            modal.find('#recipient-tamanho').val(recipienttamanho);
+            modal.find('#recipient-sabor').val(recipientsabor);
+            modal.find('#recipient-valor').val(recipientvalor);
+        })
+        $('#myModalDeletar').on('show.bs.modal', function(event){
+            var button = $(event.relatedTarget);
+            var recipientid = button.data('id');
+            var recipientnome = button.data('nome');
+
+            var modal = $(this);
+            modal.find('#recipient-id').val(recipientid);
+            modal.find('#recipient-nome').val(recipientnome);
+        })
+
+        $('#myModalEditarC').on('show.bs.modal', function(event){
+            var button = $(event.relatedTarget);
+            var recipientid = button.data('id');
+            var recipientnome = button.data('nome');
+            var recipienttamanho = button.data('tamanho');
+            var recipientvalor = button.data('valor');
+
+            var modal = $(this);
+            modal.find('#recipient-id').val(recipientid);
+            modal.find('#recipient-nome').val(recipientnome);
+            modal.find('#recipient-tamanho').val(recipienttamanho);
+            modal.find('#recipient-valor').val(recipientvalor);
+        })
+        $('#myModalDeletarC').on('show.bs.modal', function(event){
+            var button = $(event.relatedTarget);
+            var recipientid = button.data('id');
+            var recipientnome = button.data('nome');
+
+            var modal = $(this);
+            modal.find('#recipient-id').val(recipientid);
+            modal.find('#recipient-nome').val(recipientnome);
+        })
+    </script>
+</body>
+</html>
